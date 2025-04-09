@@ -1,5 +1,7 @@
 """Tests for DNSPolicy health checks - healthy endpoint"""
 
+from time import sleep
+
 import pytest
 
 from testsuite.kuadrant.policy import has_condition
@@ -21,6 +23,7 @@ def health_check():
 
 def test_remove_endpoint(backend, dns_policy, dns_health_probe, client, auth):
     """Scale backend replicas to 0 and back to 1, and check if DNSPolicy will remove the unhealthy endpoint"""
+    sleep(60)
     assert dns_health_probe.is_healthy()
     response = client.get("/get", auth=auth)
     assert response.status_code == 200

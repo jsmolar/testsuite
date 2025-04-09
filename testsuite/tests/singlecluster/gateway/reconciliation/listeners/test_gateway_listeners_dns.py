@@ -18,6 +18,7 @@ def test_change_listener(custom_client, check_ok_https, gateway, route, second_d
     the old hostname gets deleted from DNS provider. After editing the hostname in HTTPRoute to the new value
     this test checks the reconciliation of such procedure.
     """
+    sleep(100)
     check_ok_https(wildcard_domain)
     wildcard_domain_ttl = gateway.get_listener_dns_ttl(DEFAULT_LISTENER_NAME)
 
@@ -28,7 +29,7 @@ def test_change_listener(custom_client, check_ok_https, gateway, route, second_d
     )
     route.add_hostname(second_domain)
 
-    sleep(wildcard_domain_ttl)
+    sleep(wildcard_domain_ttl + 60)
     check_ok_https(second_domain)
     assert is_nxdomain(wildcard_domain)
     assert custom_client(wildcard_domain).get("/get").has_dns_error()

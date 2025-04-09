@@ -22,6 +22,7 @@ def test_listeners(custom_client, check_ok_https, gateway, route, wildcard_domai
     """
 
     # Check the default domain works and second domain does not exist yet
+    sleep(100)
     check_ok_https(wildcard_domain)
     assert is_nxdomain(second_domain)
     assert custom_client(second_domain).get("/get").has_dns_error()
@@ -40,7 +41,7 @@ def test_listeners(custom_client, check_ok_https, gateway, route, wildcard_domai
     gateway.remove_listener(LISTENER_NAME)
 
     # Check the default domain still works and second domain does not exist anymore
-    sleep(second_domain_ttl)
+    sleep(second_domain_ttl + 60)
     check_ok_https(wildcard_domain)
     assert is_nxdomain(second_domain)
     assert custom_client(second_domain).get("/get").has_dns_error()

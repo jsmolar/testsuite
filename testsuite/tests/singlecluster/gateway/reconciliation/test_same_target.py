@@ -1,5 +1,7 @@
 """Tests that DNSPolicy/TLSPolicy is rejected when the Gateway already has a policy of the same kind"""
 
+from time import sleep
+
 import pytest
 
 from testsuite.kuadrant.policy.tls import TLSPolicy
@@ -22,6 +24,7 @@ def test_two_policies_one_gw(
     """Tests that policy is rejected when the Gateway already has a DNSPolicy"""
 
     # test that it works before the policy
+    sleep(100)
     response = client.get("get", auth=auth)
     assert response.status_code == 200, "Original DNSPolicy does not work"
 

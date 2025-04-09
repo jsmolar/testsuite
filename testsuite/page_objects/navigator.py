@@ -3,8 +3,6 @@ import inspect
 from dataclasses import dataclass
 from typing import Type, Callable
 
-from playwright.sync_api import Page
-
 NAV_META = "nav_meta"
 step_tree = {}
 
@@ -70,10 +68,11 @@ class Navigator:
             return
 
         page_instance = step_metadata.cls(self.page)
-        bound_method = getattr(page_instance, step_metadata.method.__name__)
-        self.path.append(bound_method)
         if self._is_displayed(page_instance):
             return
+        bound_method = getattr(page_instance, step_metadata.method.__name__)
+        self.path.append(bound_method)
+
         return self._construct_path(step_metadata.cls)
 
     def _run(self):

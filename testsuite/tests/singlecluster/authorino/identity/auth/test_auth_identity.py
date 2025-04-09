@@ -1,5 +1,7 @@
 """Tests basic authentication with Keycloak/Auth0 as identity provider"""
 
+from time import sleep
+
 import pytest
 
 from testsuite.httpx.auth import HttpxOidcClientAuth

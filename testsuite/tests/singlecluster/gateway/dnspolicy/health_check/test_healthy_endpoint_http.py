@@ -1,5 +1,7 @@
 """Tests for DNSPolicy health checks with HTTP only endpoint - healthy endpoint"""
 
+from time import sleep
+
 import pytest
 
 from testsuite.gateway import GatewayListener
@@ -41,6 +43,7 @@ def commit(request, route, dns_policy):  # pylint: disable=unused-argument
 
 def test_healthy_endpoint_http(dns_health_probe, client):
     """Test healthy endpoint check without TLS enabled"""
+    sleep(60)
     assert dns_health_probe.is_healthy()
 
     response = client.get("/get")

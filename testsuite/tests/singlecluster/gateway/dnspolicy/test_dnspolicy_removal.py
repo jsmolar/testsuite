@@ -35,6 +35,7 @@ def test_dnspolicy_removal(gateway, dns_policy, client):
     - Delete attached DNSPolicy
     - Verify that Gateway is no longer affected by DNSPolicy and requests are failing
     """
+    sleep(60)
     assert gateway.refresh().is_affected_by(dns_policy)
     response = client.get("/get")
     assert response.status_code == 200

@@ -67,7 +67,7 @@ def rate_limit(kuadrant, cluster, blame, request, module_label, route, gateway):
 def commit(request, authorization, rate_limit):
     """Commits all important stuff before tests"""
     for component in [authorization, rate_limit]:
-        if component is not None:
+        if component is not None and len(component.model.spec) > 1:
             request.addfinalizer(component.delete)
             component.commit()
             component.wait_for_ready()

@@ -44,9 +44,9 @@ def check_ok_https(custom_client, auth):
 
     def _check_ok_https(domain: str):
         response = custom_client(domain).get("/get", auth=auth)
+        assert response.status_code == 200
         assert not response.has_dns_error()
         assert not response.has_cert_verify_error()
-        assert response.status_code == 200
 
     return _check_ok_https
 

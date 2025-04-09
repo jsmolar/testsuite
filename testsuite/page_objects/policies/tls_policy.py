@@ -8,10 +8,10 @@ class TLSNewPage(Navigable):
     def __init__(self, page: Page):
         super().__init__(page)
         self.policy_name = self.page.locator("//input[@id='simple-form-policy-name-01']")
-        self.gateway_select = self.page.locator("//input[@id='gateway-select']")
+        self.gateway_select = self.page.locator("//select[@id='gateway-select']")
         self.cluster_issuer_checkbox = self.page.locator("//input[@id='cluster-issuer']")
         self.issuer_checkbox = self.page.locator("//input[@id='issuer']")
-        self.cluster_issuer_select = self.page.locator("//input[@id='clusterissuer-select']")
+        self.cluster_issuer_select = self.page.locator("//select[@id='clusterissuer-select']")
         self.create_button = self.page.get_by_text("Create", exact=True)
 
     def create(self, tls_policy: TLSPolicy):

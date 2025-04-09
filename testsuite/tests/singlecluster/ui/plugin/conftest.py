@@ -7,24 +7,30 @@ from testsuite.page_objects.navigator import Navigator
 @pytest.fixture(autouse=True)
 def login(page, base_domain):
     page.goto(f"https://console-openshift-console.{base_domain}")
-    page.locator("//a[@title='Log in with htpasswd']").click()
+    page.locator("//a[@title='Log in with HTPasswd']").click()
     page.locator("//input[@name='username']").fill("admin")
     page.locator("//input[@name='password']").fill("CHANGEME")
     page.locator("//button[@type='submit']").click()
     return NavBar(page)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture()
 def dynamic_plugin(login, page):
-    if not login.kuadrant_nav.is_visible:
+    if not login.kuadrant_nav.is_visible():
         page.locator("//button[@data-test='Dynamic Plugins']").click()
         page.locator("//a[@href='/k8s/cluster/operator.openshift.io~v1~Console/cluster/console-plugins']").click()
         page.locator(
             "//tr[.//a[@data-test-id='kuadrant-console-plugin']]//button[@data-test='edit-console-plugin']"
         ).click()
         page.locator("//input[@value='enabled']").check()
+        page.locator("//button[@id='confirm-action']").click()
 
 
 @pytest.fixture
 def navigator(page):
     return Navigator(page)
+
+
+@pytest.fixture(autouse=True)
+def commit(commit):
+    pass
